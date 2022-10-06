@@ -104,6 +104,7 @@ module.exports = {
   addBank: async (req, res) => {
     try {
       const { bankName, accountNumber, name } = req.body;
+      // console.log(req.body.accountNumber);
       await Bank.create({
         bankName,
         accountNumber,
