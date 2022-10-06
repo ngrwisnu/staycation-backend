@@ -1,0 +1,80 @@
+<!-- Modal -->
+<div
+  class="modal fade"
+  id="add-modal"
+  tabindex="-1"
+  aria-labelledby="addBankAccount"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="addBankAccount">
+          Add New Bank Account
+        </h1>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <form action="/admin/bank" method="post" enctype="multipart/form-data">
+        <div class="modal-body">
+          <div class="mb-3">
+            <label for="bankName" class="form-label">Bank Name</label>
+            <input
+              type="text"
+              name="bankName"
+              class="form-control"
+              id="bankName"
+              placeholder="Bank Name"
+            />
+          </div>
+          <div class="mb-3">
+            <label for="accountNum" class="form-label">Account No.</label>
+            <input
+              type="text"
+              name="accountNum"
+              class="form-control"
+              id="accountNum"
+              placeholder="Enter your account number"
+            />
+          </div>
+          <div class="mb-3">
+            <label for="name" class="form-label">Bank Holder</label>
+            <input
+              type="text"
+              name="name"
+              class="form-control"
+              id="name"
+              placeholder="Enter your name"
+            />
+          </div>
+          <div class="mb-3">
+            <label for="image" class="form-label">Payment proof</label>
+            <input
+              type="file"
+              name="image"
+              class="form-control"
+              id="image"
+              placeholder="Choose file"
+            />
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Close
+            </button>
+            <button type="submit" class="btn btn-primary">
+              Add to Database
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
