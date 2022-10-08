@@ -19,6 +19,7 @@ module.exports = {
         status: alertStatus,
       };
 
+      // local parameter -> sent variables to views folder
       res.render("admin/category/view_category", {
         category,
         alert,
@@ -84,8 +85,9 @@ module.exports = {
     }
   },
   // Bank tab controller
-  viewBank: (req, res) => {
+  viewBank: async (req, res) => {
     try {
+      const bank = await Bank.find();
       const alertMsg = req.flash("alertMsg");
       const alertStatus = req.flash("alertStatus");
       const alert = {
@@ -93,7 +95,11 @@ module.exports = {
         status: alertStatus,
       };
 
-      res.render("admin/bank/view_bank", { title: "Staycation | Bank", alert });
+      res.render("admin/bank/view_bank", {
+        title: "Staycation | Bank",
+        bank,
+        alert,
+      });
     } catch (error) {
       req.flash("alertMsg", `${error.message}`);
       req.flash("alertStatus", "warning");
@@ -104,7 +110,6 @@ module.exports = {
   addBank: async (req, res) => {
     try {
       const { bankName, accountNumber, name } = req.body;
-      // console.log(req.body.accountNumber);
       await Bank.create({
         bankName,
         accountNumber,

@@ -25,9 +25,27 @@
             <th>Bank Name</th>
             <th>Account No.</th>
             <th>Name</th>
+            <th>Bank Logo</th>
             <th>Action</th>
           </tr>
         </thead>
+        <tbody>
+          <% bank.map((item, index) => { %>
+          <tr>
+            <td><%= index + 1 %></td>
+            <td><%= item.bankName %></td>
+            <td><%= item.accountNumber %></td>
+            <td><%= item.name %></td>
+            <td>
+              <img
+                src="http://localhost:3000/<%= item.imageUrl %>"
+                alt="Bank <%= item.bankName %>"
+                height="30"
+              />
+            </td>
+          </tr>
+          <% }) %>
+        </tbody>
       </table>
     </div>
   </div>
