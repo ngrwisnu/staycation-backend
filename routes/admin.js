@@ -14,6 +14,7 @@ router.delete("/category/:id", adminController.deleteCategory);
 // Bank endpoint
 router.get("/bank", adminController.viewBank);
 router.post("/bank", upload, adminController.addBank);
+router.put("/bank", upload, adminController.editBank);
 
 // Items endpoint
 router.get("/items", adminController.viewItems);
