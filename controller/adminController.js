@@ -121,7 +121,6 @@ module.exports = {
 
       req.flash("alertMsg", "Successfully added new Bank");
       req.flash("alertStatus", "success");
-
       res.redirect("/admin/bank");
     } catch (error) {
       req.flash("alertMsg", `${error.message}`);
@@ -129,7 +128,6 @@ module.exports = {
       res.redirect("/admin/bank");
     }
   },
-
   editBank: async (req, res) => {
     try {
       const { id, name, bankName, accountNumber } = req.body;
@@ -165,10 +163,28 @@ module.exports = {
       res.redirect("/admin/bank");
     }
   },
+  deleteBank: async (req, res) => {
+    try {
+      const { id } = req.params;
+      const bank = await Bank.findOne({ _id: id });
+      await fs.unlink(path.join(`public/${bank.imageUrl}`));
+      await bank.remove();
+
+      req.flash("alertMsg", "Success deleting an item");
+      req.flash("alertStatus", "success");
+      res.redirect("/admin/bank");
+    } catch (error) {
+      req.flash("alertMsg", `${error.message}`);
+      req.flash("alertStatus", "warning");
+      res.redirect("/admin/bank");
+    }
+  },
+
   // Items tab controller
   viewItems: (req, res) => {
     res.render("admin/items/view_item", { title: "Staycation | Items" });
   },
+
   // Booking tab controller
   viewBooking: (req, res) => {
     res.render("admin/booking/view_booking", { title: "Staycation | Booking" });
