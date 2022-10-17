@@ -12,6 +12,8 @@
 
       <!-- Begin Page Content -->
       <div class="container-fluid">
+        <!-- Alert -->
+        <%- include('../../partials/alert.ejs') %>
         <!-- Page Heading -->
         <h1 class="h3 mb-4 text-gray-800">List Items</h1>
 
@@ -107,7 +109,7 @@
 <%- include('../../partials/js.ejs') %>
 
 <script>
-  ClassicEditor.create(document.querySelector("#place-description"))
+  ClassicEditor.create(document.querySelector("#about"))
     .then((editor) => {
       console.log(editor);
     })

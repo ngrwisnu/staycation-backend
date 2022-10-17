@@ -12,11 +12,40 @@
           <tr>
             <th>No.</th>
             <th>Title</th>
-            <th>Price</th>
             <th>City</th>
+            <th>Price</th>
             <th>Action</th>
           </tr>
         </thead>
+        <tbody>
+          <% item.map((item, index) => { %>
+          <tr>
+            <td><%= index + 1 %></td>
+            <td><%= item.title %></td>
+            <td><%= item.city %></td>
+            <td style="text-align: right">
+              <%= new Intl.NumberFormat('id-ID').format(item.price) %>
+            </td>
+            <td>
+              <form
+                action="/admin/items/<%= item.id %>?_method=delete"
+                method="post"
+              >
+                <a
+                  href="javascript:void()"
+                  type="button"
+                  class="button-update btn btn-warning btn-circle btn-sm"
+                  data-id="<%= item._id %>"
+                  ><i class="fas fa-edit"></i
+                ></a>
+                <button type="submit" class="btn btn-danger btn-circle btn-sm">
+                  <i class="fas fa-trash"></i>
+                </button>
+              </form>
+            </td>
+          </tr>
+          <% }) %>
+        </tbody>
       </table>
     </div>
   </div>
