@@ -1,0 +1,82 @@
+<div
+  class="tab-pane fade show active"
+  id="add-item-tab-pane"
+  role="tabpanel"
+  aria-labelledby="add-item-tab"
+  tabindex="0"
+>
+  <div class="content-container add-content my-4 rounded-2 border p-3 bg-white">
+    <div class="content-wrapper" style="width: 70%">
+      <form action="/admin/items" method="post" enctype="multipart/form-data">
+        <div class="mb-3">
+          <label for="title" class="form-label">Title</label>
+          <input
+            type="text"
+            class="form-control"
+            name="title"
+            id="title"
+            value="<%= item.title %>"
+            placeholder="Enter the place name"
+          />
+        </div>
+        <div class="mb-3">
+          <label for="city" class="form-label">City</label>
+          <input
+            type="text"
+            class="form-control"
+            name="city"
+            id="city"
+            value="<%= item.city %>"
+            placeholder="example: Bandung, West Java"
+          />
+        </div>
+        <div class="mb-3">
+          <label for="price" class="form-label">Price per night</label>
+          <input
+            type="number"
+            class="form-control"
+            name="price"
+            id="price"
+            value="<%= item.price %>"
+            placeholder="example: 200000"
+          />
+        </div>
+        <div class="mb-3">
+          <label for="category" class="form-lable">Category</label>
+          <select
+            name="category"
+            id="category"
+            class="form-select"
+            aria-label="Default select example"
+          >
+            <option selected value="<%= item.categoryId.name %>">
+              <%= item.categoryId.name %>
+            </option>
+            <% category.map((item) => { %>
+            <option value="<%= item._id %>"><%= item.name %></option>
+            <% }) %>
+          </select>
+        </div>
+        <div class="mb-3">
+          <label for="image" class="form-label">Choose image(s)</label>
+          <input
+            class="form-control"
+            type="file"
+            name="image"
+            id="image"
+            multiple
+          />
+        </div>
+        <div class="mb-3">
+          <label for="about" class="form-label"
+            >Desciption about the Place</label
+          >
+          <textarea class="form-control" name="about" id="about" rows="30">
+<%= item.description %></textarea
+          >
+        </div>
+        <button type="submit" class="btn btn-primary">Save Changes</button>
+      </form>
+    </div>
+  </div>
+</div>

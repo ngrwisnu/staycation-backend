@@ -278,6 +278,35 @@ module.exports = {
     }
   },
 
+  editItem: async (req, res) => {
+    try {
+      const { id } = req.params;
+      const item = await Item.findOne({ _id: id })
+        .populate({ path: "imageId", select: "id imageUrl" })
+        .populate({ path: "categoryId", select: "id name" });
+      const category = await Category.find();
+
+      const alertMsg = req.flash("alertMsg");
+      const alertStatus = req.flash("alertStatus");
+      const alert = {
+        message: alertMsg,
+        status: alertStatus,
+      };
+      res.render("admin/items/view_item", {
+        title: "Staycation | Edit Item",
+        alert,
+        item,
+        category,
+        action: "edit",
+        // user: req.session.user
+      });
+    } catch (error) {
+      req.flash("alertMsg", `${error.message}`);
+      req.flash("alertStatus", "warning");
+      res.redirect("/admin/items");
+    }
+  },
+
   deleteItem: async (req, res) => {
     try {
       const { id } = req.params;
