@@ -356,7 +356,24 @@ module.exports = {
   deleteItem: async (req, res) => {
     try {
       const { id } = req.params;
-      console.log(id);
+      const item = await Item.findOne({ _id: id }).populate("imageId");
+
+      for (let i = 0; i < item.imageId.length; i++) {
+        Image.findOne({ _id: item.imageId[i]._id })
+          .then((image) => {
+            fs.unlink(path.join(`public/${image.imageUrl}`));
+            image.remove();
+          })
+          .catch((error) => {
+            req.flash("alertMsg", `${error.message}`);
+            req.flash("alertStatus", "warning");
+            res.redirect("/admin/items");
+          });
+      }
+      await item.remove();
+      req.flash("alertMsg", "Success deleting an item");
+      req.flash("alertStatus", "success");
+      res.redirect("/admin/items");
     } catch (error) {
       req.flash("alertMsg", `${error.message}`);
       req.flash("alertStatus", "warning");
