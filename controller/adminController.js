@@ -278,7 +278,7 @@ module.exports = {
     }
   },
 
-  editItem: async (req, res) => {
+  showEditedItem: async (req, res) => {
     try {
       const { id } = req.params;
       const item = await Item.findOne({ _id: id })
@@ -300,6 +300,52 @@ module.exports = {
         action: "edit",
         // user: req.session.user
       });
+    } catch (error) {
+      req.flash("alertMsg", `${error.message}`);
+      req.flash("alertStatus", "warning");
+      res.redirect("/admin/items");
+    }
+  },
+
+  editItem: async (req, res) => {
+    try {
+      const { id } = req.params;
+      const { category, title, price, city, about } = req.body;
+      const item = await Item.findOne({ _id: id })
+        .populate({ path: "imageId", select: "id imageUrl" })
+        .populate({ path: "categoryId", select: "id name" });
+
+      console.log(req.body);
+      console.log(item);
+      if (req.files.length > 0) {
+        for (let i = 0; i < item.imageId.length; i++) {
+          const imageUpdate = await Image.findOne({ _id: item.imageId[i]._id });
+          await fs.unlink(path.join(`public/${imageUpdate.imageUrl}`));
+          imageUpdate.imageUrl = `images/${req.files[i].filename}`;
+          await imageUpdate.save();
+        }
+        item.title = title;
+        item.price = price;
+        item.city = city;
+        item.description = about;
+        item.categoryId = category;
+        await item.save();
+
+        req.flash("alertMsg", "Update success");
+        req.flash("alertStatus", "success");
+        res.redirect("/admin/items");
+      } else {
+        console.log(item);
+        item.title = title;
+        item.price = price;
+        item.city = city;
+        item.description = about;
+        item.categoryId = category;
+        await item.save();
+        req.flash("alertMsg", "Update success");
+        req.flash("alertStatus", "success");
+        res.redirect("/admin/items");
+      }
     } catch (error) {
       req.flash("alertMsg", `${error.message}`);
       req.flash("alertStatus", "warning");

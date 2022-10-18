@@ -7,7 +7,11 @@
 >
   <div class="content-container add-content my-4 rounded-2 border p-3 bg-white">
     <div class="content-wrapper" style="width: 70%">
-      <form action="/admin/items" method="post" enctype="multipart/form-data">
+      <form
+        action="/admin/items/<%= item.id %>?_method=PUT"
+        method="post"
+        enctype="multipart/form-data"
+      >
         <div class="mb-3">
           <label for="title" class="form-label">Title</label>
           <input
@@ -49,7 +53,7 @@
             class="form-select"
             aria-label="Default select example"
           >
-            <option selected value="<%= item.categoryId.name %>">
+            <option selected value="<%= item.categoryId._id %>">
               <%= item.categoryId.name %>
             </option>
             <% category.map((item) => { %>
