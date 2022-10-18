@@ -14,9 +14,11 @@
       <div class="container-fluid">
         <!-- Alert -->
         <%- include('../../partials/alert.ejs') %>
+        <!-- end of Alert -->
+
+        <% if (action == 'view') { %>
         <!-- Page Heading -->
         <h1 class="h3 mb-4 text-gray-800">List Items</h1>
-
         <!-- Nav Tabs -->
         <ul class="nav nav-tabs" id="myTab" role="tablist">
           <li class="nav-item" role="presentation">
@@ -55,6 +57,33 @@
           <%- include('./add_content.ejs') %>
         </div>
         <!-- end of Nav Tabs -->
+
+        <% } else if (action == 'show image') { %>
+        <!-- Page Heading -->
+        <h1 class="h3 mb-4 text-gray-800">Item's Images</h1>
+        <!-- Nav Tabs -->
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+          <li class="nav-item" role="presentation">
+            <button
+              class="nav-link active"
+              id="items-list-tab"
+              data-bs-toggle="tab"
+              data-bs-target="#items-list-tab-pane"
+              type="button"
+              role="tab"
+              aria-controls="items-list-tab-pane"
+              aria-selected="true"
+            >
+              Show Image
+            </button>
+          </li>
+        </ul>
+        <div class="tab-content" id="myTabContent">
+          <!-- show content -->
+          <%- include('./show_item_image.ejs') %>
+        </div>
+        <!-- end of Nav Tabs -->
+        <% } %>
       </div>
       <!-- /.container-fluid -->
     </div>

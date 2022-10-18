@@ -1,0 +1,27 @@
+<div
+  class="tab-pane fade show active"
+  id="items-list-tab-pane"
+  role="tabpanel"
+  aria-labelledby="items-list-tab"
+  tabindex="0"
+>
+  <div class="row">
+    <% item.imageId.map((image) => { %>
+    <div class="col-4">
+      <div class="card shadow mt-4 mb-4">
+        <div class="card-body" style="position: relative">
+          <img
+            src="http://localhost:3000/<%= image.imageUrl %>"
+            alt="image"
+            style="object-fit: contain; width: 100%"
+          />
+        </div>
+      </div>
+    </div>
+    <% }) %>
+  </div>
+  <a href="/admin/items" class="btn"
+    ><i class="fas fa-chevron-left" style="margin-right: 0.5rem"></i>Back to
+    Items list</a
+  >
+</div>

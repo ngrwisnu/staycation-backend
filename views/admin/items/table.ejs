@@ -32,6 +32,11 @@
                 method="post"
               >
                 <a
+                  href="/admin/items/show-image/<%= item.id %>"
+                  class="btn btn-info btn-circle btn-sm"
+                  ><i class="fas fa-image"></i
+                ></a>
+                <a
                   href="javascript:void()"
                   type="button"
                   class="button-update btn btn-warning btn-circle btn-sm"
@@ -41,6 +46,9 @@
                 <button type="submit" class="btn btn-danger btn-circle btn-sm">
                   <i class="fas fa-trash"></i>
                 </button>
+                <a href="#" class="btn btn-success btn-circle btn-sm"
+                  ><i class="fas fa-plus"></i
+                ></a>
               </form>
             </td>
           </tr>

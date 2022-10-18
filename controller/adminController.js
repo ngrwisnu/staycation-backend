@@ -187,7 +187,9 @@ module.exports = {
       const category = await Category.find();
 
       // get all category for item dropdown form
-      const item = await Item.find();
+      const item = await Item.find()
+        .populate({ path: "imageId", select: "id imageUrl" })
+        .populate({ path: "categoryId", select: "id name" });
 
       const alertMsg = req.flash("alertMsg");
       const alertStatus = req.flash("alertStatus");
@@ -201,6 +203,7 @@ module.exports = {
         category,
         item,
         alert,
+        action: "view",
       });
     } catch (error) {
       req.flash("alertMsg", `${error.message}`);
@@ -240,6 +243,34 @@ module.exports = {
         req.flash("alertStatus", "success");
         res.redirect("/admin/items");
       }
+    } catch (error) {
+      req.flash("alertMsg", `${error.message}`);
+      req.flash("alertStatus", "warning");
+      res.redirect("/admin/items");
+    }
+  },
+
+  showItemImage: async (req, res) => {
+    try {
+      const { id } = req.params;
+      const item = await Item.findOne({ _id: id }).populate({
+        path: "imageId",
+        select: "id imageUrl",
+      });
+
+      const alertMsg = req.flash("alertMsg");
+      const alertStatus = req.flash("alertStatus");
+      const alert = {
+        message: alertMsg,
+        status: alertStatus,
+      };
+      res.render("admin/items/view_item", {
+        title: "Staycation | Show Item Image",
+        alert,
+        item,
+        action: "show image",
+        // user: req.session.user
+      });
     } catch (error) {
       req.flash("alertMsg", `${error.message}`);
       req.flash("alertStatus", "warning");
