@@ -1,0 +1,79 @@
+<div
+  class="tab-pane fade"
+  id="activity-tab-pane"
+  role="tabpanel"
+  aria-labelledby="activity-tab"
+  tabindex="0"
+>
+  <!-- DataTales Example -->
+  <div class="card shadow mt-4 mb-4">
+    <div class="card-body">
+      <div class="row">
+        <div class="col-md-5">
+          <form
+            action="/admin/items"
+            method="post"
+            enctype="multipart/form-data"
+          >
+            <div class="modal-body">
+              <div class="mb-3">
+                <label for="name" class="form-label">Name</label>
+                <input
+                  type="text"
+                  name="name"
+                  class="form-control"
+                  id="name"
+                  placeholder="Name"
+                />
+              </div>
+              <div class="mb-3">
+                <label for="qty" class="form-label">Type</label>
+                <input
+                  type="text"
+                  name="type"
+                  class="form-control"
+                  id="type"
+                  placeholder="example: Beach"
+                />
+              </div>
+              <div class="mb-3">
+                <label for="image" class="form-label">Image</label>
+                <input
+                  type="file"
+                  name="image"
+                  class="form-control"
+                  id="image"
+                  placeholder="Choose image(s)"
+                />
+              </div>
+              <div style="display: flex">
+                <button type="submit" class="btn btn-primary">
+                  Add to Database
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="col-md-7">
+          <div class="table-responsive">
+            <table
+              class="table table-bordered"
+              id="dataTableActivity"
+              width="100%"
+              cellspacing="0"
+            >
+              <thead>
+                <tr>
+                  <th>No.</th>
+                  <th>Name</th>
+                  <th>Type</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
