@@ -2,7 +2,7 @@
 const Category = require("../models/Category");
 const Bank = require("../models/Bank");
 const Item = require("../models/Item");
-// const Feature = require("../models/Feature");
+const Feature = require("../models/Feature");
 // const Activity = require("../models/Activity");
 const Image = require("../models/Image");
 
@@ -394,17 +394,48 @@ module.exports = {
         status: alertStatus,
       };
 
-      // const feature = await Feature.find({ itemId: itemId });
+      const feature = await Feature.find({ itemId: itemId });
       // const activity = await Activity.find({ itemId: itemId });
 
       res.render("admin/items/item_detail/view_item_detail", {
         title: "Staycation | Item Detail",
         alert,
         itemId,
-        // feature,
+        feature,
         // activity,
         // user: req.session.user
       });
+    } catch (error) {
+      req.flash("alertMsg", `${error.message}`);
+      req.flash("alertStatus", "warning");
+      res.redirect(`/admin/items/show-item-detail/${itemId}`);
+    }
+  },
+
+  addFeature: async (req, res) => {
+    const { name, qty, itemId } = req.body;
+
+    try {
+      if (!req.file) {
+        req.flash("alertMsg", `Image not found`);
+        req.flash("alertStatus", "warning");
+        res.redirect(`/admin/items/show-item-detail/${itemId}`);
+      }
+
+      const feature = await Feature.create({
+        name,
+        qty,
+        itemId,
+        imageUrl: `images/${req.file.filename}`,
+      });
+
+      const item = await Item.findOne({ _id: itemId });
+      item.featureId.push({ _id: feature._id });
+      await item.save();
+
+      req.flash("alertMsg", `New feature added`);
+      req.flash("alertStatus", "success");
+      res.redirect(`/admin/items/show-item-detail/${itemId}`);
     } catch (error) {
       req.flash("alertMsg", `${error.message}`);
       req.flash("alertStatus", "warning");
