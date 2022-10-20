@@ -11,7 +11,7 @@
       <div class="row">
         <div class="col-md-5">
           <form
-            action="/admin/items"
+            action="/admin/items/add/activity"
             method="post"
             enctype="multipart/form-data"
           >
@@ -27,7 +27,7 @@
                 />
               </div>
               <div class="mb-3">
-                <label for="qty" class="form-label">Type</label>
+                <label for="type" class="form-label">Type</label>
                 <input
                   type="text"
                   name="type"
@@ -50,6 +50,7 @@
                 <button type="submit" class="btn btn-primary">
                   Add to Database
                 </button>
+                <input type="hidden" value="<%= itemId %>" name="itemId" />
               </div>
             </div>
           </form>
@@ -67,9 +68,48 @@
                   <th>No.</th>
                   <th>Name</th>
                   <th>Type</th>
+                  <th>Image</th>
                   <th>Action</th>
                 </tr>
               </thead>
+              <tbody>
+                <% activity.map((item, index) => { %>
+                <tr>
+                  <td><%= index + 1 %></td>
+                  <td><%= item.name %></td>
+                  <td><%= item.type %></td>
+                  <td>
+                    <img
+                      src="http://localhost:3000/<%= item.imageUrl %>"
+                      alt="<%= item.name %>"
+                      height="30"
+                    />
+                  </td>
+                  <td>
+                    <form
+                      action="/admin/items/<%= itemId %>/activity/<%= item.id %>?_method=delete"
+                      method="post"
+                    >
+                      <a
+                        href="javascript:void()"
+                        type="button"
+                        class="button-update btn btn-warning btn-circle btn-sm"
+                        data-id="<%= item._id %>"
+                        data-name="<%= item.name %>"
+                        data-type="<%= item.type %>"
+                        ><i class="fas fa-edit"></i
+                      ></a>
+                      <button
+                        type="submit"
+                        class="btn btn-danger btn-circle btn-sm"
+                      >
+                        <i class="fas fa-trash"></i>
+                      </button>
+                    </form>
+                  </td>
+                </tr>
+                <% }) %>
+              </tbody>
             </table>
           </div>
         </div>

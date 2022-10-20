@@ -3,7 +3,7 @@ const Category = require("../models/Category");
 const Bank = require("../models/Bank");
 const Item = require("../models/Item");
 const Feature = require("../models/Feature");
-// const Activity = require("../models/Activity");
+const Activity = require("../models/Activity");
 const Image = require("../models/Image");
 
 const fs = require("fs-extra");
@@ -395,14 +395,14 @@ module.exports = {
       };
 
       const feature = await Feature.find({ itemId: itemId });
-      // const activity = await Activity.find({ itemId: itemId });
+      const activity = await Activity.find({ itemId: itemId });
 
       res.render("admin/items/item_detail/view_item_detail", {
         title: "Staycation | Item Detail",
         alert,
         itemId,
         feature,
-        // activity,
+        activity,
         // user: req.session.user
       });
     } catch (error) {
@@ -490,6 +490,94 @@ module.exports = {
       await feature.remove();
 
       req.flash("alertMsg", `Success deleting item's feature`);
+      req.flash("alertStatus", "success");
+      res.redirect(`/admin/items/show-item-detail/${itemId}`);
+    } catch (error) {
+      req.flash("alertMsg", `${error.message}`);
+      req.flash("alertStatus", "warning");
+      res.redirect(`/admin/items/show-item-detail/${itemId}`);
+    }
+  },
+
+  // Activity controller
+  addActivity: async (req, res) => {
+    const { name, type, itemId } = req.body;
+
+    try {
+      if (!req.file) {
+        req.flash("alertMsg", `Image not found`);
+        req.flash("alertStatus", "warning");
+        res.redirect(`/admin/items/show-item-detail/${itemId}`);
+      }
+
+      const activity = await Activity.create({
+        name,
+        type,
+        itemId,
+        imageUrl: `images/${req.file.filename}`,
+      });
+
+      const item = await Item.findOne({ _id: itemId });
+      item.activityId.push({ _id: activity._id });
+      await item.save();
+
+      req.flash("alertMsg", `Success adding new activity`);
+      req.flash("alertStatus", "success");
+      res.redirect(`/admin/items/show-item-detail/${itemId}`);
+    } catch (error) {
+      req.flash("alertMsg", `${error.message}`);
+      req.flash("alertStatus", "warning");
+      res.redirect(`/admin/items/show-item-detail/${itemId}`);
+    }
+  },
+
+  editActivity: async (req, res) => {
+    const { id, name, type, itemId } = req.body;
+    try {
+      const activity = await Activity.findOne({ _id: id });
+      if (req.file == undefined) {
+        activity.name = name;
+        activity.type = type;
+        await activity.save();
+
+        req.flash("alertMsg", `Success updated item's activity`);
+        req.flash("alertStatus", "success");
+        res.redirect(`/admin/items/show-item-detail/${itemId}`);
+      } else {
+        await fs.unlink(path.join(`public/${activity.imageUrl}`));
+        activity.name = name;
+        activity.type = type;
+        activity.imageUrl = `images/${req.file.filename}`;
+        await activity.save();
+
+        req.flash("alertMsg", `Success updated item's activity`);
+        req.flash("alertStatus", "success");
+        res.redirect(`/admin/items/show-item-detail/${itemId}`);
+      }
+    } catch (error) {
+      req.flash("alertMsg", `${error.message}`);
+      req.flash("alertStatus", "warning");
+      res.redirect(`/admin/items/show-item-detail/${itemId}`);
+    }
+  },
+
+  deleteActivity: async (req, res) => {
+    const { id, itemId } = req.params;
+    try {
+      const activity = await Activity.findOne({ _id: id });
+
+      const item = await Item.findOne({ _id: itemId }).populate("activityId");
+
+      for (let i = 0; i < item.activityId.length; i++) {
+        if (item.activityId[i]._id.toString() === activity._id.toString()) {
+          item.activityId.pull({ _id: activity._id });
+          await item.save();
+        }
+      }
+      await fs.unlink(path.join(`public/${activity.imageUrl}`));
+      await activity.remove();
+
+      req.flash("alertMsg", `Success deleting item's activity`);
       req.flash("alertStatus", "success");
       res.redirect(`/admin/items/show-item-detail/${itemId}`);
     } catch (error) {

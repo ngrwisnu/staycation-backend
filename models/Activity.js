@@ -19,7 +19,7 @@ const activitySchema = new mongoose.Schema({
   },
   itemId: {
     type: ObjectId,
-    ref: Item,
+    ref: "Item",
   },
 });
 

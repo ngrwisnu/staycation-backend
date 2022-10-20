@@ -110,6 +110,8 @@
 <%- include('../../../partials/js.ejs') %>
 <!-- Include edit feature modal -->
 <%- include('./edit_feature_modal.ejs') %>
+<!-- Include edit activity modal -->
+<%- include('./edit_activity_modal.ejs') %>
 
 <script>
   $(document).ready(function () {
@@ -135,5 +137,17 @@
     $(".id").val(id);
     $(".name").val(name);
     $(".qty").val(qty);
+  });
+
+  // Edit Activity Modal
+  $("#dataTableActivity").on("click", ".button-update", function () {
+    let id = $(this).data("id");
+    let name = $(this).data("name");
+    let type = $(this).data("type");
+
+    $("#edit-activity-modal").modal("show");
+    $(".id").val(id);
+    $(".name").val(name);
+    $(".type").val(type);
   });
 </script>

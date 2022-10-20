@@ -1,0 +1,71 @@
+<!-- Modal -->
+<div
+  class="modal fade"
+  id="edit-activity-modal"
+  tabindex="-1"
+  aria-labelledby="editActivity"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="editActivity">Edit Item's Activity</h1>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <form
+        action="/admin/items/update/activity?_method=put"
+        method="post"
+        enctype="multipart/form-data"
+      >
+        <div class="modal-body">
+          <div class="mb-3">
+            <label for="name" class="form-label">Activity name</label>
+            <input
+              type="text"
+              name="name"
+              class="form-control name"
+              placeholder=""
+            />
+          </div>
+          <div class="mb-3">
+            <label for="type" class="form-label">Activity type</label>
+            <input
+              type="text"
+              name="type"
+              class="form-control type"
+              placeholder=""
+            />
+          </div>
+
+          <div class="mb-3">
+            <label for="image" class="form-label">Activity image</label>
+            <input
+              type="file"
+              name="image"
+              class="form-control"
+              placeholder="Choose file here"
+            />
+            <small><i>Choose the new file</i></small>
+          </div>
+          <div class="modal-footer">
+            <input type="hidden" class="id" name="id" />
+            <input type="hidden" value="<%= itemId %>" name="itemId" />
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Close
+            </button>
+            <button type="submit" class="btn btn-primary">Save changes</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
