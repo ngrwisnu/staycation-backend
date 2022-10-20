@@ -108,6 +108,8 @@
 </div>
 
 <%- include('../../../partials/js.ejs') %>
+<!-- Include edit feature modal -->
+<%- include('./edit_feature_modal.ejs') %>
 
 <script>
   $(document).ready(function () {
@@ -122,4 +124,16 @@
     .catch((error) => {
       console.error(error);
     });
+
+  // Edit Feature Modal
+  $("#dataTable").on("click", ".button-update", function () {
+    let id = $(this).data("id");
+    let name = $(this).data("name");
+    let qty = $(this).data("qty");
+
+    $("#edit-feature-modal").modal("show");
+    $(".id").val(id);
+    $(".name").val(name);
+    $(".qty").val(qty);
+  });
 </script>

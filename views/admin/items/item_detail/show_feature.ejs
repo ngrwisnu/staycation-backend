@@ -87,7 +87,7 @@
                   </td>
                   <td>
                     <form
-                      action="/admin/feature/<%= item.id %>?_method=delete"
+                      action="/admin/items/<%= itemId %>/feature/<%= item.id %>?_method=delete"
                       method="post"
                     >
                       <a
@@ -96,6 +96,7 @@
                         class="button-update btn btn-warning btn-circle btn-sm"
                         data-id="<%= item._id %>"
                         data-name="<%= item.name %>"
+                        data-qty="<%= item.qty %>"
                         ><i class="fas fa-edit"></i
                       ></a>
                       <button

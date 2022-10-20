@@ -443,6 +443,62 @@ module.exports = {
     }
   },
 
+  editFeature: async (req, res) => {
+    const { id, name, qty, itemId } = req.body;
+    try {
+      const feature = await Feature.findOne({ _id: id });
+      if (req.file == undefined) {
+        feature.name = name;
+        feature.qty = qty;
+        await feature.save();
+
+        req.flash("alertMsg", `Success updated item's feature`);
+        req.flash("alertStatus", "success");
+        res.redirect(`/admin/items/show-item-detail/${itemId}`);
+      } else {
+        await fs.unlink(path.join(`public/${feature.imageUrl}`));
+        feature.name = name;
+        feature.qty = qty;
+        feature.imageUrl = `images/${req.file.filename}`;
+        await feature.save();
+
+        req.flash("alertMsg", `Success updated item's feature`);
+        req.flash("alertStatus", "success");
+        res.redirect(`/admin/items/show-item-detail/${itemId}`);
+      }
+    } catch (error) {
+      req.flash("alertMsg", `${error.message}`);
+      req.flash("alertStatus", "warning");
+      res.redirect(`/admin/items/show-item-detail/${itemId}`);
+    }
+  },
+
+  deleteFeature: async (req, res) => {
+    const { id, itemId } = req.params;
+    try {
+      const feature = await Feature.findOne({ _id: id });
+
+      const item = await Item.findOne({ _id: itemId }).populate("featureId");
+
+      for (let i = 0; i < item.featureId.length; i++) {
+        if (item.featureId[i]._id.toString() === feature._id.toString()) {
+          item.featureId.pull({ _id: feature._id });
+          await item.save();
+        }
+      }
+      await fs.unlink(path.join(`public/${feature.imageUrl}`));
+      await feature.remove();
+
+      req.flash("alertMsg", `Success deleting item's feature`);
+      req.flash("alertStatus", "success");
+      res.redirect(`/admin/items/show-item-detail/${itemId}`);
+    } catch (error) {
+      req.flash("alertMsg", `${error.message}`);
+      req.flash("alertStatus", "warning");
+      res.redirect(`/admin/items/show-item-detail/${itemId}`);
+    }
+  },
+
   // Booking tab controller
   viewBooking: (req, res) => {
     res.render("admin/booking/view_booking", { title: "Staycation | Booking" });
