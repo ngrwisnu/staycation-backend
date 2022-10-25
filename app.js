@@ -8,7 +8,7 @@ const methodOverride = require("method-override");
 const session = require("express-session");
 const flash = require("connect-flash");
 // connect to MongoDB
-mongoose.connect("mongodb://localhost:27017/db_staycation");
+mongoose.connect("mongodb://127.0.0.1:27017/db_staycation");
 
 var indexRouter = require("./routes/index");
 var usersRouter = require("./routes/users");
