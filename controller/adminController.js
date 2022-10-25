@@ -30,10 +30,6 @@ module.exports = {
       } else {
         res.redirect("/admin/dashboard");
       }
-      // res.render("index", {
-      //   alert,
-      //   title: "Staycation | Login",
-      // });
     } catch (error) {
       res.redirect("/admin/signin");
     }
@@ -43,9 +39,6 @@ module.exports = {
     try {
       const { username, password } = req.body;
       const user = await Users.findOne({ username: username });
-
-      console.log(req.body);
-      console.log(user);
 
       if (!user) {
         req.flash("alertMsg", "Username not found");
