@@ -465,8 +465,8 @@ var data = [
     documents: [
       {
         _id: mongoose.Types.ObjectId("5e96cbe292b97300fc90cee1"),
-        bookingStartDate: "12-12-2020",
-        bookingEndDate: "12-12-2020",
+        startDate: "12-12-2020",
+        endDate: "12-12-2020",
         invoice: 1231231,
         itemId: {
           _id: mongoose.Types.ObjectId("5e96cbe292b97300fc902222"),
@@ -478,9 +478,9 @@ var data = [
         memberId: mongoose.Types.ObjectId("5e96cbe292b97300fc903333"),
         bankId: mongoose.Types.ObjectId("5e96cbe292b97300fc903323"),
         payments: {
-          proofPayment: "images/bukti.jpg",
+          paymentProof: "images/buktibayar.jpeg",
           bankFrom: "BCA",
-          status: "Proses",
+          status: "On process",
           accountHolder: "ang",
         },
       },
@@ -497,14 +497,14 @@ var data = [
         firstName: "Elfin",
         lastName: "Sanjaya",
         email: "elfinsanjaya12@gmail.com",
-        phoneNumber: "082377954008",
+        phone: "082377954008",
       },
       {
         _id: mongoose.Types.ObjectId("5e96cbe292b97300fc903334"),
         firstName: "Yein",
         lastName: "Narayana",
         email: "elfinsanjaya1207@gmail.com",
-        phoneNumber: "082377954008",
+        phone: "082377954008",
       },
     ],
   },
