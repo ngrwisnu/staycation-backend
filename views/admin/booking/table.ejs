@@ -14,10 +14,10 @@
         <thead>
           <tr>
             <th>No.</th>
+            <th>Invoice</th>
             <th>Dates</th>
             <th>Title</th>
             <th>Customer Name</th>
-            <th>Bank Name</th>
             <th>Status</th>
             <th>Action</th>
           </tr>
@@ -26,6 +26,7 @@
           <% booking.map((item, index) => { %>
           <tr>
             <td><%= index + 1 %></td>
+            <td>#<%= item.invoice %></td>
             <td>
               <%= item.startDate.toLocaleString().split(',')[0] %> - <%=
               item.endDate.toLocaleString().split(',')[0] %>
@@ -34,7 +35,6 @@
             <td>
               <%= item.memberId.firstName + ' ' + item.memberId.lastName %>
             </td>
-            <td><%= item.payments.bankFrom %></td>
             <td><%= item.payments.status %></td>
 
             <td>
