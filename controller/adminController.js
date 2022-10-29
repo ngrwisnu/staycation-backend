@@ -45,13 +45,13 @@ module.exports = {
       if (!user) {
         req.flash("alertMessage", "Username not found");
         req.flash("alertStatus", "warning");
-        res.redirect("/admin/signin");
+        return res.redirect("/admin/signin");
       }
       const isPasswordMatch = await bcrypt.compare(password, user.password);
       if (!isPasswordMatch) {
         req.flash("alertMessage", "Password does not match");
         req.flash("alertStatus", "warning");
-        res.redirect("/admin/signin");
+        return res.redirect("/admin/signin");
       }
 
       req.session.user = {
